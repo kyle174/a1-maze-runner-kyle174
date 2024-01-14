@@ -11,7 +11,14 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-        if (args[0].equals("-i") || args[0].equals("--input")) {
+        boolean flag = false;
+        try {
+            flag = (args[0].equals("-i") || args[0].equals("--input"));
+        } catch(Exception e) {
+            logger.error("/!\\ An error has occurred (missing arguments) /!\\");
+            System.exit(1);
+        }
+        if (flag) {
             logger.info("** Starting Maze Runner");
             try {
                 logger.info("**** Reading the maze from file " + args[1]);
@@ -28,14 +35,14 @@ public class Main {
                     System.out.print(System.lineSeparator());
                 }
             } catch(Exception e) {
-                logger.error("/!\\ An error has occurred /!\\");
+                logger.error("/!\\ An error has occurred (file not found) /!\\");
             }
             logger.info("**** Computing path");
             logger.error("PATH NOT COMPUTED");
             logger.info("** End of MazeRunner");
         }
         else {
-            logger.error("MISSING INPUT FLAG");
+            logger.error("/!\\ An error has occurred (missing input flag) /!\\");
         }
     }
 }

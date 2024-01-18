@@ -20,7 +20,12 @@ public class Main {
             logger.info(config);
             Maze theMaze = new Maze(config.file());
             MazeRunner runner = new MazeRunner();
-            runner.findPath(theMaze);
+            if(config.path().isEmpty()) {
+                runner.findPath(theMaze);
+            }
+            else {
+                runner.verifyPath(config.path());
+            }
         } catch(Exception e) {
             logger.error(e.getMessage());
             System.exit(1);
@@ -30,16 +35,19 @@ public class Main {
 
     private static Configuration configure(String[] args) throws ParseException {
         Options options = new Options();
-        Option input = new Option("i", "input", true, "Input File");
+        Option input = new Option("i", "input", true, "Name of Input File");
         options.addOption(input);
+        options.addOption("p", true, "Path to Verify");
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
         String fileName = cmd.getOptionValue(input,"./examples/small.maz.txt");
+        String inputPath = cmd.getOptionValue("p","");
         logger.info("**** Reading the maze from file " + fileName);
-        return new Configuration(fileName);
+        logger.info("**** Path to verify " + inputPath);
+        return new Configuration(fileName,inputPath);
     }
 
-    private record Configuration(String file) {
+    private record Configuration(String file, String path) {
         Configuration {
         }
     }

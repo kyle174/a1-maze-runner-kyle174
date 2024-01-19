@@ -3,46 +3,52 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+
+import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.commons.cli.ParseException;
 
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-        boolean flag = false;
+        logger.info("** Starting Maze Runner");
         try {
-            flag = (args[0].equals("-i") || args[0].equals("--input"));
+            Configuration config = configure(args);
+            logger.info(config);
+            Maze theMaze = new Maze(config.file());
+            MazeRunner runner = new MazeRunner();
+            if(config.path().isEmpty()) {
+                runner.findPath(theMaze);
+            }
+            else {
+                runner.verifyPath(config.path());
+            }
         } catch(Exception e) {
-            logger.error("/!\\ An error has occurred (missing arguments) /!\\");
+            logger.error(e.getMessage());
             System.exit(1);
         }
-        if (flag) {
-            logger.info("** Starting Maze Runner");
-            try {
-                logger.info("**** Reading the maze from file " + args[1]);
-                BufferedReader reader = new BufferedReader(new FileReader(args[1]));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    for (int idx = 0; idx < line.length(); idx++) {
-                        if (line.charAt(idx) == '#') {
-                            System.out.print("WALL ");
-                        } else if (line.charAt(idx) == ' ') {
-                            System.out.print("PASS ");
-                        }
-                    }
-                    System.out.print(System.lineSeparator());
-                }
-            } catch(Exception e) {
-                logger.error("/!\\ An error has occurred (file not found) /!\\");
-            }
-            logger.info("**** Computing path");
-            logger.error("PATH NOT COMPUTED");
-            logger.info("** End of MazeRunner");
-        }
-        else {
-            logger.error("/!\\ An error has occurred (missing input flag) /!\\");
+        logger.info("** End of MazeRunner");
+    }
+
+    private static Configuration configure(String[] args) throws ParseException {
+        Options options = new Options();
+        Option input = new Option("i", "input", true, "Name of Input File");
+        options.addOption(input);
+        options.addOption("p", true, "Path to Verify");
+        CommandLineParser parser = new DefaultParser();
+        CommandLine cmd = parser.parse(options, args);
+        String fileName = cmd.getOptionValue(input,"./examples/small.maz.txt");
+        String inputPath = cmd.getOptionValue("p","");
+        logger.info("**** Reading the maze from file " + fileName);
+        logger.info("**** Path to verify " + inputPath);
+        return new Configuration(fileName,inputPath);
+    }
+
+    private record Configuration(String file, String path) {
+        Configuration {
         }
     }
 }

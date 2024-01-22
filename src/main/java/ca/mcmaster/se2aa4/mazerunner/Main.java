@@ -19,13 +19,7 @@ public class Main {
             Configuration config = configure(args);
             logger.info(config);
             Maze theMaze = new Maze(config.file());
-            MazeRunner runner = new MazeRunner();
-            if(config.path().isEmpty()) {
-                runner.findPath(theMaze);
-            }
-            else {
-                runner.verifyPath(config.path());
-            }
+            theMaze.processPath(config.path());
         } catch(Exception e) {
             logger.error(e.getMessage());
             System.exit(1);

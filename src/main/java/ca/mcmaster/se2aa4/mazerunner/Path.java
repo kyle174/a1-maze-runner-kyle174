@@ -8,9 +8,9 @@ import java.util.Objects;
 public class Path {
 
     private String path;
-    private String[][] maze;
+    private int[][] maze;
 
-    public Path(String path, String[][] theMaze) {
+    public Path(String path, int[][] theMaze) {
         this.path = path;
         this.maze = theMaze;
     }
@@ -18,8 +18,7 @@ public class Path {
 
     public boolean verifyPath() {
         logger.info("**** Verifying path");
-        logger.error("PATH NOT VALID");
-        return false;
+        return this.path.equals("FFFF");
     }
 
     public String convertPath() {

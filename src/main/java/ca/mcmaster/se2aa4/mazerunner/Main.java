@@ -18,8 +18,8 @@ public class Main {
         try {
             Configuration config = configure(args);
             logger.info(config);
-            Maze theMaze = new Maze(config.file());
-            theMaze.processPath(config.path());
+            Maze theMaze = new Maze(config.file);
+            theMaze.processPath(config.path);
         } catch(Exception e) {
             logger.error(e.getMessage());
             System.exit(1);

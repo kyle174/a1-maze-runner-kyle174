@@ -5,28 +5,41 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 
 public class Maze {
 
     private static final Logger logger = LogManager.getLogger();
+    private final int[][] maze;
 
     public Maze(String file) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
-                    }
-                }
-                System.out.print(System.lineSeparator());
+        MazeGenerator mazeGen = new MazeGenerator(file);
+        this.maze = mazeGen.loadMaze();
+    }
+
+    public void processPath(String path) {
+        if (path.isEmpty()) {
+            System.out.println("Path: "+findPath());
+        }
+        else {
+            if (verifyPath(path)) {
+                System.out.println(path+" is a valid path!");
             }
-        } catch(Exception e) {
-            logger.error("/!\\ An error has occurred (file not found) /!\\");
-            System.exit(1);
+            else {
+                System.out.println(path+" is NOT a valid path!");
+            }
         }
     }
+
+    private boolean verifyPath(String path) {
+        Path pathVerifier = new Path(path, this.maze);
+        return pathVerifier.verifyPath();
+    }
+
+    public String findPath() {
+        MazeRunner runner = new MVP();
+        return runner.calcPath(this.maze);
+    }
+
+
 }

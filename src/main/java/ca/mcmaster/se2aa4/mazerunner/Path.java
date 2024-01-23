@@ -18,7 +18,7 @@ public class Path {
 
     public boolean verifyPath() {
         logger.info("**** Verifying path");
-        return this.path.equals("FFFF");
+        return (this.path.equals("FFFF") || this.path.equals("4F"));
     }
 
     public String convertPath() {

@@ -10,7 +10,7 @@ public class MVP implements MazeRunner {
     @Override
     public String calcPath(int[][] theMaze) {
         logger.info("**** Computing path");
-        return "FFFF";
+        return "4F";
     }
 
 

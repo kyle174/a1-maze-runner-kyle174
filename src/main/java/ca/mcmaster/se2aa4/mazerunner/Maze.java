@@ -11,15 +11,41 @@ public class Maze {
 
     private static final Logger logger = LogManager.getLogger();
     private final int[][] maze;
+    private final int entry;
+    private final int exit;
 
     public Maze(String file) {
         MazeGenerator mazeGen = new MazeGenerator(file);
         this.maze = mazeGen.loadMaze();
+        this.entry = findEntry();
+        logger.info("ENTRY INDEX: "+this.entry);
+        this.exit = findExit();
+        logger.info("EXIT INDEX: "+this.exit);
+    }
+
+    private int findEntry() {
+        int entry = -1;
+        for(int i=0; i<this.maze.length; i++) {
+            if (this.maze[i][0] == 1) {
+                entry = i;
+            }
+        }
+        return entry;
+    }
+
+    private int findExit() {
+        int exit = -1;
+        for(int i=0; i<this.maze.length; i++) {
+            if (this.maze[i][this.maze.length-1] == 1) {
+                exit = i;
+            }
+        }
+        return exit;
     }
 
     public void processPath(String path) {
         if (path.isEmpty()) {
-            System.out.println("Path: "+findPath());
+            System.out.println("Path: "+findPath(this.entry, this.exit));
         }
         else {
             if (verifyPath(path)) {
@@ -36,10 +62,11 @@ public class Maze {
         return pathVerifier.verifyPath();
     }
 
-    public String findPath() {
-        MazeRunner runner = new MVP();
-        return runner.calcPath(this.maze);
+    public String findPath(int entry, int exit) {
+        MazeRunner runner = new RightHand(this.maze, entry, exit);
+        return runner.calcPath();
     }
+
 
 
 }

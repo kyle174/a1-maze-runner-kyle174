@@ -15,7 +15,7 @@ public class MazeGenerator {
     private final int cols;
 
     public MazeGenerator(String file) {
-        this.file = "examples/straight.maz.txt";
+        this.file = file;
         this.rows = getSize()[0];
         this.cols = getSize()[1];
     }
@@ -38,6 +38,9 @@ public class MazeGenerator {
         } catch(Exception e) {
             logger.error("/!\\ An error has occurred /!\\: "+e.getMessage());
             System.exit(1);
+        }
+        for (int k=0; k<this.rows; k++) {
+            System.out.println(Arrays.toString(maze[k]));
         }
         return maze;
     }

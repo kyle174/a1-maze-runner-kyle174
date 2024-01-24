@@ -18,9 +18,7 @@ public class Maze {
         MazeGenerator mazeGen = new MazeGenerator(file);
         this.maze = mazeGen.loadMaze();
         this.entry = findEntry();
-        logger.info("ENTRY INDEX: "+this.entry);
         this.exit = findExit();
-        logger.info("EXIT INDEX: "+this.exit);
     }
 
     private int findEntry() {

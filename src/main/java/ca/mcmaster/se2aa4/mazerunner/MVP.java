@@ -8,7 +8,7 @@ public class MVP implements MazeRunner {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public String calcPath(int[][] theMaze) {
+    public String calcPath() {
         logger.info("**** Computing path");
         return "4F";
     }

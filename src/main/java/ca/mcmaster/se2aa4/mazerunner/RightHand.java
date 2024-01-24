@@ -25,6 +25,11 @@ public class RightHand implements MazeRunner {
     }
 
     @Override
+    public boolean verifyPath(String path) {
+        return true;
+    }
+
+    @Override
     public String calcPath() {
         logger.info("**** Computing path");
         int curRow = this.entry;
@@ -65,7 +70,8 @@ public class RightHand implements MazeRunner {
             }
             prevMove = result.substring(result.length()-1);
         }
-        return result;
+        Path mazePath = new Path(result);
+        return mazePath.factorPath();
     }
 
     private boolean checkRight(int curRow, int curCol) {

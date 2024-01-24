@@ -43,30 +43,20 @@ public class Maze {
         return exit;
     }
 
-    public void processPath(String path) {
-        if (path.isEmpty()) {
-            System.out.println("Path: "+findPath(this.entry, this.exit));
+    public void processPath(String inputPath) {
+        Path mazePath;
+        MazeRunner runner = new RightHand(this.maze, entry, exit);
+        if (inputPath.isEmpty()) {
+            String path = runner.calcPath();
+            System.out.println("Path: "+path);
         }
         else {
-            if (verifyPath(path)) {
-                System.out.println(path+" is a valid path!");
+            if (runner.verifyPath(inputPath)) {
+                System.out.println(inputPath+" is a valid path!");
             }
             else {
-                System.out.println(path+" is NOT a valid path!");
+                System.out.println(inputPath+" is NOT a valid path!");
             }
         }
     }
-
-    private boolean verifyPath(String path) {
-        Path pathVerifier = new Path(path, this.maze);
-        return pathVerifier.verifyPath();
-    }
-
-    public String findPath(int entry, int exit) {
-        MazeRunner runner = new RightHand(this.maze, entry, exit);
-        return runner.calcPath();
-    }
-
-
-
 }

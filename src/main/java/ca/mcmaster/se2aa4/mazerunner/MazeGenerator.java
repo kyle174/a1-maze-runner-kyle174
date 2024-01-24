@@ -39,9 +39,6 @@ public class MazeGenerator {
             logger.error("/!\\ An error has occurred /!\\: "+e.getMessage());
             System.exit(1);
         }
-        for (int k=0; k<this.rows; k++) {
-            System.out.println(Arrays.toString(maze[k]));
-        }
         return maze;
     }
 

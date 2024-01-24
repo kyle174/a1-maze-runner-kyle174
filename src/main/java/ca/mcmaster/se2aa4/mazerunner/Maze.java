@@ -26,6 +26,7 @@ public class Maze {
         for(int i=0; i<this.maze.length; i++) {
             if (this.maze[i][0] == 1) {
                 entry = i;
+                break;
             }
         }
         return entry;
@@ -34,8 +35,9 @@ public class Maze {
     private int findExit() {
         int exit = -1;
         for(int i=0; i<this.maze.length; i++) {
-            if (this.maze[i][this.maze.length-1] == 1) {
+            if (this.maze[i][this.maze[0].length-1] == 1) {
                 exit = i;
+                break;
             }
         }
         return exit;

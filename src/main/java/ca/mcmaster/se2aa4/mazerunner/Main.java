@@ -19,7 +19,7 @@ public class Main {
             Configuration config = configure(args);
             logger.info(config);
             Maze theMaze = new Maze(config.file);
-            theMaze.processPath(config.path);
+            System.out.println(theMaze.processPath(config.path));
         } catch(Exception e) {
             logger.error(e.getMessage());
             System.exit(1);
@@ -34,10 +34,10 @@ public class Main {
         options.addOption("p", true, "Path to Verify");
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
-        String fileName = cmd.getOptionValue(input,"./examples/small.maz.txt");
+        String fileName = cmd.getOptionValue(input,"./examples/straight.maz.txt");
         String inputPath = cmd.getOptionValue("p","");
-        logger.info("**** Reading the maze from file " + fileName);
-        logger.info("**** Path to verify " + inputPath);
+        logger.info("**** Reading the maze from file: " + fileName);
+        logger.info("**** Path to verify: " + inputPath);
         return new Configuration(fileName,inputPath);
     }
 

@@ -1,8 +1,12 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Path {
 
     private final String path;
+    private static final Logger logger = LogManager.getLogger();
 
     public Path(String path) {
         this.path = path;
@@ -34,5 +38,34 @@ public class Path {
         else {
             return "";
         }
+    }
+
+    public String expandPath() {
+        String expanded = "";
+        char curr;
+        char next = ' ';
+        for (int i=0; i<this.path.length(); i++) {
+            curr = this.path.charAt(i);
+            if (i < this.path.length()-1) {
+                next = this.path.charAt(i+1);
+            }
+            if (Character.isDigit(curr)) {
+                int num = Character.getNumericValue(curr);
+                for (int j=0; j<num; j++) {
+                    expanded+=next;
+                }
+                i++;
+            }
+            else if (curr == ' ') {
+                continue;
+            }
+            else if (curr == 'L' || curr == 'R' || curr == 'F'){
+                expanded+=curr;
+            }
+            else {
+                return "";
+            }
+        }
+        return expanded;
     }
 }

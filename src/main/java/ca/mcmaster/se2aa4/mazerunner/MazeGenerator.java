@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.util.Arrays;
 
 public class MazeGenerator {
-
     private static final Logger logger = LogManager.getLogger();
     private final String file;
     private final int rows;

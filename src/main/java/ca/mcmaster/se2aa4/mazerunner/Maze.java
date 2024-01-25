@@ -1,15 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Arrays;
-
 public class Maze {
-
-    private static final Logger logger = LogManager.getLogger();
     private final int[][] maze;
     private final int entry;
     private final int exit;
@@ -43,19 +34,20 @@ public class Maze {
         return exit;
     }
 
-    public void processPath(String inputPath) {
-        Path mazePath;
+    public String processPath(String inputPath) {
         MazeRunner runner = new RightHand(this.maze, entry, exit);
         if (inputPath.isEmpty()) {
             String path = runner.calcPath();
-            System.out.println("Path: "+path);
+            return("Path: "+path);
         }
         else {
-            if (runner.verifyPath(inputPath)) {
-                System.out.println(inputPath+" is a valid path!");
+            Path mazePath = new Path(inputPath);
+            String fixedPath = mazePath.expandPath();
+            if (runner.verifyPath(fixedPath) && !fixedPath.isEmpty()) {
+                return(inputPath+" is a valid path!");
             }
             else {
-                System.out.println(inputPath+" is NOT a valid path!");
+                return(inputPath+" is NOT a valid path!");
             }
         }
     }

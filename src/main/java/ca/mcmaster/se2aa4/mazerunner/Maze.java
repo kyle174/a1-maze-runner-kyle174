@@ -36,7 +36,7 @@ public class Maze {
 
     public String processPath(String inputPath) {
         MazeRunner runner = new RightHand(this.maze, this.entry, this.exit);
-        if (inputPath.isEmpty()) {
+        if (inputPath == null) {
             return(runner.calcPath());
         }
         else {

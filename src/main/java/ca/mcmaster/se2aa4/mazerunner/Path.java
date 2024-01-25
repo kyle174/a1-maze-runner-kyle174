@@ -45,6 +45,19 @@ public class Path {
             }
             if (Character.isDigit(curr)) {
                 int num = Character.getNumericValue(curr);
+                int nextNum;
+                while(Character.isDigit(next)) {
+                    nextNum = Character.getNumericValue(next);
+                    num*=10;
+                    num+=nextNum;
+                    i++;
+                    if (i < this.path.length()-1) {
+                        next = this.path.charAt(i+1);
+                    }
+                    else {
+                        return "";
+                    }
+                }
                 for (int j=0; j<num; j++) {
                     expanded+=next;
                 }

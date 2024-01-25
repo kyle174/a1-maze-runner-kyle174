@@ -37,17 +37,16 @@ public class Maze {
     public String processPath(String inputPath) {
         MazeRunner runner = new RightHand(this.maze, entry, exit);
         if (inputPath.isEmpty()) {
-            String path = runner.calcPath();
-            return("Path: "+path);
+            return(runner.calcPath());
         }
         else {
             Path mazePath = new Path(inputPath);
             String fixedPath = mazePath.expandPath();
             if (runner.verifyPaths(fixedPath) && !fixedPath.isEmpty()) {
-                return(inputPath+" is a valid path!");
+                return("correct path");
             }
             else {
-                return(inputPath+" is NOT a valid path!");
+                return("incorrect path");
             }
         }
     }

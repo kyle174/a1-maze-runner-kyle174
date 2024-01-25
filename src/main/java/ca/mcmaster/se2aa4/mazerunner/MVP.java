@@ -7,7 +7,7 @@ public class MVP implements MazeRunner {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public boolean verifyPath(String path) {
+    public boolean verifyPaths(String path) {
         return path.equals("FFFF");
     }
 

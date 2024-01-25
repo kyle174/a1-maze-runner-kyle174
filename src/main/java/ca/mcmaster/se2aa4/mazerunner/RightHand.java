@@ -24,9 +24,15 @@ public class RightHand implements MazeRunner {
     }
 
     @Override
-    public boolean verifyPath(String path) {
-        int curRow = this.entry;
-        int curCol = 0;
+    public boolean verifyPaths(String path) {
+        boolean eastEntry = verifyPath(path, this.entry, 0);
+        curDirection = Direction.WEST;
+        boolean westEntry = verifyPath(path, this.exit,this.maze[0].length-1);
+        return eastEntry || westEntry;
+    }
+
+    private boolean verifyPath(String path, int curRow, int curCol) {
+        Direction entryDirection = curDirection;
         try {
             for (int i = 0; i < path.length(); i++) {
                 char curr = path.charAt(i);
@@ -70,7 +76,12 @@ public class RightHand implements MazeRunner {
         } catch (Exception e) {
             return false;
         }
-        return (curRow == this.exit && curCol == this.maze[0].length - 1);
+        if (entryDirection == Direction.EAST) {
+            return (curRow == this.exit && curCol == this.maze[0].length - 1);
+        }
+        else {
+            return (curRow == this.entry && curCol == 0);
+        }
     }
 
     @Override

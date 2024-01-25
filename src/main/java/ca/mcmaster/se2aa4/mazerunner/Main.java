@@ -29,8 +29,12 @@ public class Main {
         options.addOption("p", true, "Path to Verify");
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
-        String fileName = cmd.getOptionValue(input,"./examples/straight.maz.txt");
+        String fileName = cmd.getOptionValue(input);
         String inputPath = cmd.getOptionValue("p","");
+        if(!cmd.hasOption("i") || !cmd.hasOption("input")) {
+            logger.error("Missing input flag: i");
+            System.exit(1);
+        }
         logger.info("**** Reading the maze from file: " + fileName);
         logger.info("**** Path to verify: " + inputPath);
         return new Configuration(fileName,inputPath);

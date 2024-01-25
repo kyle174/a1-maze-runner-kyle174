@@ -43,7 +43,7 @@ public class Maze {
         else {
             Path mazePath = new Path(inputPath);
             String fixedPath = mazePath.expandPath();
-            if (runner.verifyPath(fixedPath) && !fixedPath.isEmpty()) {
+            if (runner.verifyPaths(fixedPath) && !fixedPath.isEmpty()) {
                 return(inputPath+" is a valid path!");
             }
             else {

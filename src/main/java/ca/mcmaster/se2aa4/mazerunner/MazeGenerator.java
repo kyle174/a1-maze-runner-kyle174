@@ -15,8 +15,8 @@ public class MazeGenerator {
 
     public MazeGenerator(String file) {
         this.file = file;
-        this.rows = getSize()[0];
-        this.cols = getSize()[1];
+        this.rows = this.getSize()[0];
+        this.cols = this.getSize()[1];
     }
 
     public int[][] loadMaze() {
@@ -41,7 +41,7 @@ public class MazeGenerator {
         return maze;
     }
 
-    public int[] getSize() {
+    private int[] getSize() {
         int rows=0;
         int cols=0;
         try {

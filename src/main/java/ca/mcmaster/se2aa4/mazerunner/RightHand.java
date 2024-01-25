@@ -25,9 +25,9 @@ public class RightHand implements MazeRunner {
 
     @Override
     public boolean verifyPaths(String path) {
-        boolean eastEntry = verifyPath(path, this.entry, 0);
+        boolean eastEntry = this.verifyPath(path, this.entry, 0);
         curDirection = Direction.WEST;
-        boolean westEntry = verifyPath(path, this.exit,this.maze[0].length-1);
+        boolean westEntry = this.verifyPath(path, this.exit,this.maze[0].length-1);
         return eastEntry || westEntry;
     }
 
@@ -37,9 +37,9 @@ public class RightHand implements MazeRunner {
             for (int i = 0; i < path.length(); i++) {
                 char curr = path.charAt(i);
                 if (curr == 'R') {
-                    changeDirec("R");
+                    this.changeDirec("R");
                 } else if (curr == 'L') {
-                    changeDirec("L");
+                    this.changeDirec("L");
                 } else {
                     switch (curDirection) {
                         case NORTH -> {
@@ -94,7 +94,7 @@ public class RightHand implements MazeRunner {
         String prevMove = "";
         while (!(curRow == this.exit && curCol == colSize)) {
             if (checkRight(curRow,curCol) && !prevMove.equals("R")) {
-                changeDirec("R");
+                this.changeDirec("R");
                 result+="R";
             }
             else if (checkFront(curRow, curCol)) {
@@ -107,12 +107,12 @@ public class RightHand implements MazeRunner {
                 result+="F";
             }
             else if (checkLeft(curRow, curCol)) {
-                changeDirec("L");
+                this.changeDirec("L");
                 result+="L";
             }
             else {
-                changeDirec("L");
-                changeDirec("L");
+                this.changeDirec("L");
+                this.changeDirec("L");
                 result+="LL";
             }
             prevMove = result.substring(result.length()-1);
@@ -127,7 +127,6 @@ public class RightHand implements MazeRunner {
             case EAST -> (this.maze[curRow + 1][curCol] == 1);
             case SOUTH -> (this.maze[curRow][curCol - 1] == 1);
             case WEST -> (this.maze[curRow - 1][curCol] == 1);
-            default -> false;
         };
     }
 
@@ -137,7 +136,6 @@ public class RightHand implements MazeRunner {
             case EAST -> (this.maze[curRow][curCol + 1] == 1);
             case SOUTH -> (this.maze[curRow + 1][curCol] == 1);
             case WEST -> (this.maze[curRow][curCol - 1] == 1);
-            default -> false;
         };
     }
 
@@ -147,7 +145,6 @@ public class RightHand implements MazeRunner {
             case EAST -> (this.maze[curRow - 1][curCol] == 1);
             case SOUTH -> (this.maze[curRow][curCol + 1] == 1);
             case WEST -> (this.maze[curRow + 1][curCol] == 1);
-            default -> false;
         };
     }
 

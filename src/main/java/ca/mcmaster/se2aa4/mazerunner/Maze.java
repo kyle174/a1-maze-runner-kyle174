@@ -8,8 +8,8 @@ public class Maze {
     public Maze(String file) {
         MazeGenerator mazeGen = new MazeGenerator(file);
         this.maze = mazeGen.loadMaze();
-        this.entry = findEntry();
-        this.exit = findExit();
+        this.entry = this.findEntry();
+        this.exit = this.findExit();
     }
 
     private int findEntry() {
@@ -35,7 +35,7 @@ public class Maze {
     }
 
     public String processPath(String inputPath) {
-        MazeRunner runner = new RightHand(this.maze, entry, exit);
+        MazeRunner runner = new RightHand(this.maze, this.entry, this.exit);
         if (inputPath.isEmpty()) {
             return(runner.calcPath());
         }

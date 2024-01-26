@@ -30,7 +30,7 @@ public class Main {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
         String fileName = cmd.getOptionValue(input);
-        String inputPath = cmd.getOptionValue("p","");
+        String inputPath = cmd.getOptionValue("p");
         if(!cmd.hasOption("i") || !cmd.hasOption("input")) {
             logger.error("Missing input flag: i");
             System.exit(1);

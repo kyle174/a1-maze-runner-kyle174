@@ -1,6 +1,11 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Path {
+
+    private static final Logger logger = LogManager.getLogger();
     private final String path;
     public Path(String path) {
         this.path = path;
@@ -45,18 +50,20 @@ public class Path {
             }
             if (Character.isDigit(curr)) {
                 int num = Character.getNumericValue(curr);
-                int nextNum;
                 while(Character.isDigit(next)) {
-                    nextNum = Character.getNumericValue(next);
-                    num*=10;
-                    num+=nextNum;
+                    num = (num*10) + Character.getNumericValue(next);
                     i++;
                     if (i < this.path.length()-1) {
                         next = this.path.charAt(i+1);
                     }
                     else {
-                        return "";
+                        logger.error("/!\\ An error has occurred (invalid input) /!\\");
+                        System.exit(1);
                     }
+                }
+                if (next == ' '){
+                    logger.error("/!\\ An error has occurred (invalid input) /!\\");
+                    System.exit(1);
                 }
                 for (int j=0; j<num; j++) {
                     expanded+=next;
@@ -70,9 +77,11 @@ public class Path {
                 expanded+=curr;
             }
             else {
-                return "";
+                logger.error("/!\\ An error has occurred (invalid input) /!\\");
+                System.exit(1);
             }
         }
+        logger.info("Expanded Path: "+expanded);
         return expanded;
     }
 }

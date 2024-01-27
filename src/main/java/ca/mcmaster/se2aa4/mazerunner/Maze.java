@@ -2,14 +2,10 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class Maze {
     private final int[][] maze;
-    private final int entry;
-    private final int exit;
 
     public Maze(String file) {
         MazeGenerator mazeGen = new MazeGenerator(file);
         this.maze = mazeGen.loadMaze();
-        this.entry = this.findEntry();
-        this.exit = this.findExit();
     }
 
     private int findEntry() {
@@ -35,14 +31,12 @@ public class Maze {
     }
 
     public String processPath(String inputPath) {
-        MazeRunner runner = new RightHand(this.maze, this.entry, this.exit);
+        MazeRunner runner = new RightHand(this.maze, this.findEntry(), this.findExit());
         if (inputPath == null) {
             return(runner.calcPath());
         }
         else {
-            Path mazePath = new Path(inputPath);
-            String fixedPath = mazePath.expandPath();
-            if (runner.verifyPaths(fixedPath) && !fixedPath.isEmpty()) {
+            if (runner.verifyPath(inputPath)) {
                 return("correct path");
             }
             else {

@@ -17,6 +17,8 @@ public class RightHand implements MazeRunner {
     }
     private Direction curDirection = Direction.EAST;
 
+    private Path mazePath;
+
     public RightHand(int[][] maze, int entry, int exit) {
         this.maze = maze;
         this.entry = entry;
@@ -24,14 +26,16 @@ public class RightHand implements MazeRunner {
     }
 
     @Override
-    public boolean verifyPaths(String path) {
-        boolean eastEntry = this.verifyPath(path, this.entry, 0);
+    public boolean verifyPath(String path) {
+        this.mazePath = new Path(path);
+        String fixedPath = this.mazePath.expandPath();
+        boolean eastEntry = this.verify(fixedPath, this.entry, 0);
         curDirection = Direction.WEST;
-        boolean westEntry = this.verifyPath(path, this.exit,this.maze[0].length-1);
+        boolean westEntry = this.verify(fixedPath, this.exit,this.maze[0].length-1);
         return eastEntry || westEntry;
     }
 
-    private boolean verifyPath(String path, int curRow, int curCol) {
+    private boolean verify(String path, int curRow, int curCol) {
         Direction entryDirection = curDirection;
         try {
             for (int i = 0; i < path.length(); i++) {
@@ -41,6 +45,7 @@ public class RightHand implements MazeRunner {
                 } else if (curr == 'L') {
                     this.changeDirec("L");
                 } else {
+                    // Check if a valid move, if not path is invalid
                     switch (curDirection) {
                         case NORTH -> {
                             if (this.maze[curRow - 1][curCol] == 1) {
@@ -73,9 +78,11 @@ public class RightHand implements MazeRunner {
                     }
                 }
             }
+            // Out of bounds
         } catch (Exception e) {
             return false;
         }
+        // Check if at end when going from E->W or W->E
         if (entryDirection == Direction.EAST) {
             return (curRow == this.exit && curCol == this.maze[0].length - 1);
         }
@@ -93,6 +100,7 @@ public class RightHand implements MazeRunner {
         String result = "";
         String prevMove = "";
         while (!(curRow == this.exit && curCol == colSize)) {
+            // After turning right, must move forward
             if (checkRight(curRow,curCol) && !prevMove.equals("R")) {
                 this.changeDirec("R");
                 result+="R";
@@ -111,14 +119,15 @@ public class RightHand implements MazeRunner {
                 result+="L";
             }
             else {
+                // Dead end, turnaround
                 this.changeDirec("L");
                 this.changeDirec("L");
                 result+="LL";
             }
             prevMove = result.substring(result.length()-1);
         }
-        Path mazePath = new Path(result);
-        return mazePath.factorPath();
+        this.mazePath = new Path(result);
+        return this.mazePath.factorPath();
     }
 
     private boolean checkRight(int curRow, int curCol) {

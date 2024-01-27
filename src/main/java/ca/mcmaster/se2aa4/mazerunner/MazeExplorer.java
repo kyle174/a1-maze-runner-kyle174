@@ -1,9 +1,9 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-public class Maze {
+public class MazeExplorer {
     private final int[][] maze;
 
-    public Maze(String file) {
+    public MazeExplorer(String file) {
         MazeGenerator mazeGen = new MazeGenerator(file);
         this.maze = mazeGen.loadMaze();
     }

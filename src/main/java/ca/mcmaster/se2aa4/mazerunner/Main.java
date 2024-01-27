@@ -13,7 +13,7 @@ public class Main {
         try {
             Configuration config = configure(args);
             logger.info(config);
-            Maze theMaze = new Maze(config.file);
+            MazeExplorer theMaze = new MazeExplorer(config.file);
             System.out.println(theMaze.processPath(config.path));
         } catch(Exception e) {
             logger.error(e.getMessage());
